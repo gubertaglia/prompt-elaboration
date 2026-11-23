@@ -16,6 +16,13 @@ A skill **não executa a tarefa**: ela prepara a solicitação para outro agente
 - Recomenda outras skills **opcionais**, como Ponytail, Caveman e `rbx-*`, sem invocá-las automaticamente.
 - Prioriza economia de desperdício, não redução da qualidade técnica.
 
+## Releases e download
+
+- **[Última release](https://github.com/gubertaglia/prompt-elaboration/releases/latest)** — versão estável e notas de atualização.
+- **[Baixar a v1.1 para o Codex (.zip)](https://github.com/gubertaglia/prompt-elaboration/releases/download/v1.1/prompt-elaboration-v1.1.zip)** — contém a pasta `prompt-elaboration/` pronta para instalar.
+
+**Observação:** o botão **Code → Download ZIP** baixa o código-fonte completo; para instalar a skill, prefira o arquivo anexado à release.
+
 ## Instalar no Codex
 
 Instale a pasta completa deste repositório com o nome `prompt-elaboration` dentro do **diretório de skills reconhecido pelo seu Codex**. A estrutura final deve ser:
@@ -75,3 +82,8 @@ Esta versão foi preparada para o formato de Agent Skills utilizado pelo Codex, 
 - [Agent Skills — especificação](https://agentskills.io/specification)
 
 Este repositório não inclui licença de código aberta definida. A escolha de uma licença pode ser feita separadamente pelo mantenedor.
+## Manutenção das releases
+
+O workflow [Publish skill release](.github/workflows/release.yml) monta e valida o ZIP instalável. Para uma versão futura, atualize `SKILL.md`, `CHANGELOG.md` e o número de versão exibido neste README; depois execute **Actions → Publish skill release → Run workflow** e informe a tag da nova versão (por exemplo, `v1.2`).
+
+**GitHub Packages não é necessário**: a distribuição é feita por arquivos ZIP anexados às GitHub Releases.
