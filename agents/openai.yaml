@@ -1,0 +1,9 @@
+interface:
+  display_name: "Prompt Elaboration"
+  short_description: "Melhora objetivos e gera prompts claros com perguntas e configurações úteis"
+  default_prompt: "Transforme minha missão em um prompt pronto para copiar. Faça perguntas só se alterarem materialmente o objetivo; recomende configurações e skills pertinentes sem executar a tarefa."
+policy:
+  products:
+    - CHAT
+    - CODEX
+  allow_implicit_invocation: false
