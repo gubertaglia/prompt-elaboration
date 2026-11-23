@@ -16,40 +16,43 @@ A skill **não executa a tarefa**: ela prepara a solicitação para outro agente
 - Recomenda outras skills **opcionais**, como Ponytail, Caveman e `rbx-*`, sem invocá-las automaticamente.
 - Prioriza economia de desperdício, não redução da qualidade técnica.
 
-## Releases e download
+## Instalação rápida
 
-- **[Última release](https://github.com/gubertaglia/prompt-elaboration/releases/latest)** — versão estável e notas de atualização.
-- **[Baixar a v1.1 para o Codex (.zip)](https://github.com/gubertaglia/prompt-elaboration/releases/download/v1.1/prompt-elaboration-v1.1.zip)** — contém a pasta `prompt-elaboration/` pronta para instalar.
+Escolha a interface onde pretende utilizar a skill. **Instalar no Codex não a instala automaticamente no ChatGPT Web, nem vice-versa.** Consulte o [guia completo](INSTALL.md).
 
-**Observação:** o botão **Code → Download ZIP** baixa o código-fonte completo; para instalar a skill, prefira o arquivo anexado à release.
+| Plataforma | Método recomendado |
+| --- | --- |
+| **ChatGPT Web** | Abra [Habilidades](https://chatgpt.com/skills) → **Adicionar** → **Carregar do seu computador** → selecione o ZIP da release. A opção depende da sua conta e pode exigir análise do arquivo. |
+| **Codex Desktop** | Use a skill integrada `$skill-installer` com o repositório, `--path .`, `--name prompt-elaboration` e a ref `v1.1`; ou instale manualmente o ZIP. |
 
-## Instalar no Codex
+### Downloads
 
-Instale a pasta completa deste repositório com o nome `prompt-elaboration` dentro do **diretório de skills reconhecido pelo seu Codex**. A estrutura final deve ser:
+- **[Release estável v1.1](https://github.com/gubertaglia/prompt-elaboration/releases/tag/v1.1)**
+- **[Baixar skill v1.1 (.zip)](https://github.com/gubertaglia/prompt-elaboration/releases/download/v1.1/prompt-elaboration-v1.1.zip)** — ZIP instalável, contendo somente a pasta `prompt-elaboration/`.
+- [Todas as releases](https://github.com/gubertaglia/prompt-elaboration/releases).
+
+Use o **ZIP anexado à release**, não o botão **Code → Download ZIP** do GitHub, quando a intenção for instalar a skill manualmente.
+
+### Exemplo: Skill Installer no Codex
+
+No chat do Codex Desktop, selecione `$skill-installer` e envie:
 
 ```text
-<skills>/
-└── prompt-elaboration/
-    ├── SKILL.md
-    └── agents/
-        └── openai.yaml
+Instale a skill do repositório gubertaglia/prompt-elaboration,
+usando --ref v1.1 --path . --name prompt-elaboration.
+Instale no diretório de skills reconhecido por este Codex,
+sem modificar as outras skills.
 ```
 
-**Windows:** use o diretório de skills que sua instalação já reconhece (por exemplo, `%USERPROFILE%\.agents\skills` ou, em instalações que usam essa localização, `%USERPROFILE%\.codex\skills`). Evite instalar cópias duplicadas em ambos os locais.
+O código atual do instalador oficial admite o caminho `.` com nome explícito; isso **não equivale a um teste real no seu computador**. Como `SKILL.md` está na raiz, não é necessário criar `skills/prompt-elaboration/` no repositório só para essa instalação. O método pela raiz pode copiar arquivos documentais adicionais; prefira o ZIP da release para uma instalação mínima.
 
-No seletor de skills, invoque:
+Após instalar no Codex, procure:
 
 ```text
 $prompt-elaboration corrija as quedas de FPS quando há muitas explosões no meu sistema voxel Roblox
 ```
 
-> **Nota:** `\$prompt-elaboration` é a forma de seleção de skill prevista para o Codex com esse seletor. Escrever `/prompt-elaboration` não é necessariamente equivalente.
-
-## Usar no ChatGPT Web
-
-Se sua conta tiver suporte nativo à instalação de skills, a disponibilidade e o procedimento dependem do produto e da configuração da conta. **Não presuma que instalar no Codex a disponibiliza automaticamente no ChatGPT Web.**
-
-Como alternativa, crie um **Projeto** no ChatGPT e copie as instruções de [CHATGPT_WEB.md](CHATGPT_WEB.md). Essa opção reproduz o comportamento, mas não equivale à instalação de uma Agent Skill nativa.
+Em uma instalação manual típica do Windows, a pasta ficará em `%USERPROFILE%\.codex\skills\prompt-elaboration\`; use o local realmente reconhecido pelo seu Codex (que pode ser diferente). O seletor `$` é do Codex; não presuma a mesma sintaxe no ChatGPT Web.
 
 ## Exemplo de saída
 
@@ -67,21 +70,25 @@ Como alternativa, crie um **Projeto** no ChatGPT e copie as instruções de [CHA
 
 - [`SKILL.md`](SKILL.md): comportamento, limitações, perguntas e formato de resposta.
 - [`agents/openai.yaml`](agents/openai.yaml): metadados de interface e política de invocação.
-- [`CHATGPT_WEB.md`](CHATGPT_WEB.md): instruções alternativas para um Projeto no ChatGPT Web.
+- [`INSTALL.md`](INSTALL.md): instalação pelo ChatGPT Web, Skill Installer do Codex e ZIP manual, com solução de problemas.
+- [`CHATGPT_WEB.md`](CHATGPT_WEB.md): instalação nativa no ChatGPT Web e alternativa por instruções de Projeto.
 - [`CHANGELOG.md`](CHANGELOG.md): histórico de versões.
 
 ## Compatibilidade e limites
 
 Esta versão foi preparada para o formato de Agent Skills utilizado pelo Codex, mas **a descoberta, os metadados aceitos e a disponibilidade no ChatGPT Web dependem da superfície do produto**. Não há garantia de disponibilidade de modelos específicos ou de controles idênticos entre plataformas.
 
-**Validação:** pacote e estrutura conferidos. Não há resultados de testes comportamentais reais com o Codex ou o ChatGPT Web publicados neste repositório.
+**Validação:** estrutura da skill e ZIP da release conferidos; o workflow de publicação concluiu com sucesso. A instalação no dispositivo e o comportamento final da skill ainda dependem de verificação em cada interface.
 
 ## Fontes de referência
 
-- [OpenAI — documentação do Codex](https://developers.openai.com/codex/skills)
+- [OpenAI — Skills no ChatGPT](https://help.openai.com/pt-br/articles/20001066-skills-in-chatgpt)
+- [OpenAI — Skill Installer (código e instruções)](https://github.com/openai/skills/blob/main/skills/.system/skill-installer/SKILL.md)
+- [OpenAI — documentação de skills](https://learn.chatgpt.com/docs/build-skills)
 - [Agent Skills — especificação](https://agentskills.io/specification)
 
 Este repositório não inclui licença de código aberta definida. A escolha de uma licença pode ser feita separadamente pelo mantenedor.
+
 ## Manutenção das releases
 
 O workflow [Publish skill release](.github/workflows/release.yml) monta e valida o ZIP instalável. Para uma versão futura, atualize `SKILL.md`, `CHANGELOG.md` e o número de versão exibido neste README; depois execute **Actions → Publish skill release → Run workflow** e informe a tag da nova versão (por exemplo, `v1.2`).
