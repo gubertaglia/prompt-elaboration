@@ -1,0 +1,70 @@
+name: Publish skill release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (for example v1.1)"
+        required: true
+        default: "v1.1"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/release.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'chore: bootstrap v1.1 release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Assemble installable skill ZIP
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.inputs.tag || 'v1.1' }}
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?$ ]] || { echo "Invalid tag"; exit 1; }
+          mkdir -p dist/prompt-elaboration/agents
+          cp SKILL.md dist/prompt-elaboration/SKILL.md
+          cp agents/openai.yaml dist/prompt-elaboration/agents/openai.yaml
+          (
+            cd dist
+            zip -q -r "prompt-elaboration-${RELEASE_TAG}.zip" prompt-elaboration
+            unzip -t "prompt-elaboration-${RELEASE_TAG}.zip"
+          )
+          awk -v tag="$RELEASE_TAG" '
+            /^## / {
+              if (found) exit
+              if ($2 == tag) found=1
+            }
+            found { print }
+          ' CHANGELOG.md > dist/release-notes.md
+          if [ ! -s dist/release-notes.md ]; then
+            printf 'Release %s of Prompt Elaboration.\n' "$RELEASE_TAG" > dist/release-notes.md
+          fi
+          echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
+
+      - name: Publish GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release already exists: $RELEASE_TAG"
+            exit 0
+          fi
+          gh release create "$RELEASE_TAG" \
+            "dist/prompt-elaboration-${RELEASE_TAG}.zip#Skill para instalar no Codex" \
+            --title "Prompt Elaboration $RELEASE_TAG" \
+            --notes-file dist/release-notes.md \
+            --target "$GITHUB_SHA" \
+            --latest
