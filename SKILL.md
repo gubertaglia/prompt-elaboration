@@ -3,7 +3,7 @@ name: prompt-elaboration
 description: Transforma objetivos informais, bugs, problemas de desempenho, novas funcionalidades e pedidos de engenharia em um prompt único, claro e copiável. Use quando o usuário solicitar explicitamente elaboração, melhoria ou correção de um prompt para outro agente; não use para executar diretamente a tarefa.
 ---
 
-# Prompt Elaboration — v1.1
+# Prompt Elaboration — v1.2
 
 **Missão:** transformar uma intenção ou um prompt ruim em **um prompt claro, proporcional e pronto para copiar** para outro agente/chat. O produto desta skill é o texto do pedido, não a solução técnica. Funciona para Roblox, programação geral e outras tarefas sem ficar dependente de uma stack específica.
 
@@ -29,11 +29,12 @@ Entregar **um único prompt**, não uma sequência artificial de prompts ou fase
 1. Definir a missão concreta e o resultado esperado com verbo coerente.
 2. Incluir contexto e restrições **decisivos** disponíveis, sem repetir o que o executor consegue observar no próprio projeto.
 3. Dar liberdade para investigar, escolher abordagens e implementar **apenas se solicitado**. Evitar listas enciclopédicas de áreas, técnicas obrigatórias, personas artificiais e instruções óbvias sobre ferramentas já conectadas.
-4. Pedir verificação **proporcional ao impacto**: reprodução ou checagem direcionada quando útil, comparação válida para alegações de desempenho, e regressões relevantes. Não obrigar testes longos, benchmarks caros, relatórios extensos ou aprovações a cada etapa.
+4. Pedir verificação **proporcional ao impacto, risco e incerteza**: aproveitar evidências existentes e, quando adequado, começar por inspeção de código, logs ou documentos. Não impor testes longos, benchmarks, execuções repetitivas, pesquisas redundantes, chamadas de ferramentas ou aprovações a cada etapa sem necessidade. Preservar testes explicitamente solicitados ou indispensáveis para uma conclusão confiável.
 5. Preservar comportamento, contratos e qualidade relevantes; não bloquear uma reestruturação necessária com a regra cega de 'menor patch'. Diferenciar análise sem edição de implementação autorizada.
 6. Permitir perguntas pertinentes durante a execução. Acesso técnico amplo **não concede** autorização para publicar, excluir dados, alterar recursos fora do pedido ou realizar ações irreversíveis não solicitadas.
+7. Evitar instruções que transformem uma tarefa simples em investigação ilimitada. Quando a evidência já for suficiente, permitir encerrar; se faltar medição essencial, pedir que o executor identifique a lacuna e proponha a verificação mínima pertinente, em vez de inventar resultados. Não exigir confirmação empírica para apresentar hipóteses explicitamente rotuladas.
 
-Preferir linguagem natural e concisa. Não introduzir estratégias para 'economizar tokens' que reduzam evidência ou qualidade; cortar redundância, não investigação.
+Preferir linguagem natural e concisa. Economizar trabalho redundante, não evidências essenciais. A escolha entre análise estática, execução pontual e testes mais extensos depende da missão e do risco — não impor uma regra universal nem trocar resultados medidos por suposições.
 
 ## 4. Recomendar configurações pelo **destino**, não pela interface atual
 
@@ -41,7 +42,7 @@ Primeiro identificar onde **o prompt será executado**: Codex, ChatGPT Chat, Cha
 
 - **Modelo:** recomendar um nome concreto somente se disponível no seletor informado ou comprovadamente elegível na superfície de destino. Para Codex/Work com essas opções, `GPT-6.2 Sol` é um ponto de partida para programação; considerar `GPT-6.2 Astra` para decisões especialmente difíceis, quando realmente disponível. Sem opções confirmadas, recomendar **perfil de capacidade**, nunca inventar um seletor.
 - **Raciocínio:** Baixo/Médio para correção localizada; Alto para trabalho difícil, investigação profunda ou mudanças com vários componentes; Extra Alto apenas para complexidade excepcional e se disponível. Mais raciocínio não garante ganho nem economia de tokens.
-- **Planejamento:** **Não** por padrão quando já existe missão para executar. **Sim** quando escolhas arquiteturais, riscos de mudanças extensas ou decisões do usuário realmente exigirem uma etapa de planejamento. Se recomendar Sim, adequar o pedido ao planejamento (não prometer implementação nesse modo, se ele for somente de planejar).
+- **Planejamento:** **Não** por padrão quando já existe missão para executar. **Sim** quando escolhas arquiteturais, riscos de mudanças extensas ou decisões do usuário realmente exigirem uma etapa de planejamento. Não recomendar Planejamento apenas para acrescentar uma fase de validação; se recomendar Sim, adequar o pedido ao planejamento (não prometer implementação nesse modo, se ele for somente de planejar).
 - **Acesso:** para **Codex**, assumir a preferência do usuário por **Completo**, se houver esse controle; não repetir no prompt. Para ChatGPT/ambientes sem tal configuração, **omitir** Acesso em vez de inventar um recurso.
 
 Essas escolhas são recomendações contextuais, não benchmarks, garantias ou regras universais. Não gastar pesquisas recorrentes com nomes de modelos se o contexto já dá opções suficientes.

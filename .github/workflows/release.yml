@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Release tag (for example v1.1)"
+        description: "Release tag (for example v1.2)"
         required: true
-        default: "v1.1"
+        default: "v1.2"
   push:
     branches: [main]
     paths:
@@ -17,9 +17,6 @@ permissions:
 
 jobs:
   publish:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      github.event.head_commit.message == 'chore: bootstrap v1.1 release'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -30,10 +27,12 @@ jobs:
       - name: Assemble installable skill ZIP
         shell: bash
         env:
-          RELEASE_TAG: ${{ github.event.inputs.tag || 'v1.1' }}
+          RELEASE_TAG: ${{ github.event.inputs.tag || 'v1.2' }}
         run: |
           set -euo pipefail
           [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?$ ]] || { echo "Invalid tag"; exit 1; }
+          grep -Fq -- "# Prompt Elaboration — $RELEASE_TAG" SKILL.md || { echo "SKILL.md version mismatch"; exit 1; }
+          grep -Fq -- "## $RELEASE_TAG —" CHANGELOG.md || { echo "Missing version notes"; exit 1; }
           mkdir -p dist/prompt-elaboration/agents
           cp SKILL.md dist/prompt-elaboration/SKILL.md
           cp agents/openai.yaml dist/prompt-elaboration/agents/openai.yaml

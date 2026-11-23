@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.2 — 2026-11-23
+
+- Aperfeiçoada a elaboração de prompts com verificações proporcionais ao impacto, risco e incerteza.
+- Incentivado o reaproveitamento de código, logs e evidências existentes antes de impor novos testes ou pesquisas.
+- Evitadas exigências genéricas de benchmarks, ciclos repetidos de ferramentas, validações ou investigações sem critério de parada.
+- Mantidos testes necessários ou solicitados, com distinção entre hipótese, inferência e medição.
+- Modo Planejamento não deve ser recomendado apenas para criar uma etapa adicional de validação.
+- Skill continua generalista, produzindo apenas prompts; skills Roblox, Ponytail e Caveman permanecem sugestões opcionais.
+
+
 ## Atualização de documentação após v1.1 — 2026-11-23
 
 - Explicada a instalação nativa no ChatGPT Web por **Adicionar → Carregar do seu computador**, quando disponível.
