@@ -1,7 +1,7 @@
 # Instalar a Prompt Elaboration
 
-**Versão estável:** [v1.3](https://github.com/gubertaglia/prompt-elaboration/releases/tag/v1.3)  
-**Download:** [prompt-elaboration-v1.3.zip](https://github.com/gubertaglia/prompt-elaboration/releases/download/v1.3/prompt-elaboration-v1.3.zip)
+**Versão estável:** [v1.4](https://github.com/gubertaglia/prompt-elaboration/releases/tag/v1.4)  
+**Download:** [prompt-elaboration-v1.4.zip](https://github.com/gubertaglia/prompt-elaboration/releases/download/v1.4/prompt-elaboration-v1.4.zip)
 
 Este projeto contém **uma Agent Skill**, não um plugin, programa executável ou servidor MCP. O ZIP de release contém somente a pasta necessária para instalar a skill. O ZIP obtido por **Code → Download ZIP** contém o repositório inteiro e não deve ser confundido com o instalador.
 
@@ -12,7 +12,7 @@ Use este método quando sua conta exibir a função de upload de habilidades:
 1. Baixe o ZIP da release **sem extrair**.
 2. Acesse [chatgpt.com/skills](https://chatgpt.com/skills).
 3. Escolha **Adicionar → Carregar do seu computador**.
-4. Selecione `prompt-elaboration-v1.3.zip`.
+4. Selecione `prompt-elaboration-v1.4.zip`.
 5. Acompanhe a verificação da plataforma. Se aprovado, procure a habilidade em **Instaladas**.
 6. Teste com um pedido de elaboração de prompt. Ela deve **gerar o prompt**, não executar a tarefa técnica descrita.
 
@@ -27,7 +27,7 @@ O Codex inclui a habilidade `$skill-installer`. No chat, selecione essa habilida
 ```text
 Instale a skill Prompt Elaboration do repositório
 https://github.com/gubertaglia/prompt-elaboration
-usando --ref v1.3 --path . --name prompt-elaboration.
+usando --ref v1.4 --path . --name prompt-elaboration.
 Use o diretório de skills já reconhecido nesta instalação do Codex.
 Não sobrescreva nenhuma outra skill.
 ```
@@ -40,7 +40,7 @@ Se já existir uma pasta chamada `prompt-elaboration` no diretório de destino, 
 
 ## C. Codex Desktop — instalação manual do ZIP (Windows)
 
-1. Baixe a release v1.3 e extraia o ZIP.
+1. Baixe a release v1.4 e extraia o ZIP.
 2. A pasta extraída deve se chamar `prompt-elaboration` e conter:
 
 ```text
@@ -70,7 +70,9 @@ A resposta esperada inclui, conforme a interface e o pedido:
 - Perguntas só se uma decisão relevante estiver faltando;
 - Sugestões de configuração e de skills como `$rbx-optimize` somente quando apropriadas;
 - **Nenhuma alteração no jogo** — a skill não deve executar a investigação solicitada;
-- Nenhuma exigência automática de ciclos repetidos de testes no Studio; o prompt deve propor verificações pertinentes sem inventar resultados nem proibir medições necessárias.
+- Nenhuma exigência automática de ciclos de Play/Stop, benchmarks ou cenários não solicitados; preservar medições realmente necessárias ou pedidas, sem inventar resultados.
+- Se você disser que fará os testes práticos, o prompt deve preservar essa divisão e permitir checagens estáticas pertinentes, sem antecipar uma bateria de testes.
+- Em tarefas não relacionadas ao Roblox, os mesmos princípios devem se aplicar sem recomendar skills Roblox desnecessariamente.
 
 A presença no seletor comprova descoberta, **não** que a skill funciona perfeitamente. O teste comportamental é uma verificação adicional.
 

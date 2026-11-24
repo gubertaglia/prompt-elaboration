@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.4 — 2026-11-24
+
+- **Motivação:** uma execução relatada no Codex Plus consumiu 95 pontos percentuais da janela de cinco horas em cerca de 24 minutos, com 108 chamadas e 14,7 milhões de tokens acumulados incluindo cache. O mantenedor observou em tarefas posteriores que testes práticos, medições e confirmações podiam ocupar parte relevante do trabalho e preferiu assumir essas atividades. As observações não isolam causalidade nem comprovam economia.
+- **Validation Ownership:** preservar responsabilidade manual, híbrida ou autônoma pela validação; não inventar preferência quando ausente nem inferir autorização ampla de testes caros a partir de um pedido genérico de implementação.
+- **Implementation First:** favorecer alterações fundamentadas assim que houver evidência suficiente, sem atrasar código por testes não essenciais; preservar segurança, integridade e correção.
+- **Intent Preservation:** critérios de aceitação descrevem resultados, não procedimentos obrigatórios; evitar antecipar cenários, métricas, ambientes, benchmarks e repetições não solicitados.
+- **Skill Delegation:** delegar métodos especializados, evitar instruções duplicadas e fluxos redundantes, com alinhamento opcional a Roblox Engineering Skills v2.1.0.
+- Preservar requisitos explícitos de teste, reprodução e medição; distinguir ganhos esperados de resultados medidos e explicitar riscos e validações pendentes.
+- Atualizados README, instalação, instruções alternativas do ChatGPT Web e metadados. Preservados caráter universal, invocação explícita, um único prompt e estrutura CHAT/CODEX.
+- Validação estrutural dos dois arquivos instaláveis e integridade do ZIP; testes comportamentais e redução real de cota não comprovados.
+
 ## v1.3 — 2026-11-23
 
 - Definidos critérios de aceitação proporcionais e reutilização de achados e baselines válidos.

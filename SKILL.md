@@ -3,7 +3,7 @@ name: prompt-elaboration
 description: Transforma objetivos informais, bugs, problemas de desempenho, novas funcionalidades e pedidos de engenharia em um prompt único, claro e copiável. Use quando o usuário solicitar explicitamente elaboração, melhoria ou correção de um prompt para outro agente; não use para executar diretamente a tarefa.
 ---
 
-# Prompt Elaboration — v1.3
+# Prompt Elaboration — v1.4
 
 **Missão:** transformar uma intenção ou um prompt ruim em **um prompt claro, proporcional e pronto para copiar** para outro agente/chat. O produto desta skill é o texto do pedido, não a solução técnica. Funciona para Roblox, programação geral e outras tarefas sem ficar dependente de uma stack específica.
 
@@ -11,41 +11,52 @@ description: Transforma objetivos informais, bugs, problemas de desempenho, nova
 
 ## 1. Entender o objetivo
 
-- Extrair **ação pretendida**, sintoma ou resultado desejado, contexto conhecido, limites explícitos e critérios relevantes. Reutilizar informações realmente dadas no chat sem recontar todo o histórico.
+- Extrair **ação pretendida**, sintoma ou resultado desejado, contexto conhecido, limites explícitos e critérios relevantes. Reutilizar informações realmente dadas no chat, incluindo preferências aplicáveis sobre quem valida o resultado, sem recontar todo o histórico.
 - Preservar a intenção: *investigar* não é *corrigir*; *planejar* não é *implementar*; *revisar um diff* não é *auditar todo o repositório*. Se o usuário pediu correção ou implementação, o prompt pode autorizar tais alterações no escopo pedido.
 - Não inventar causas, requisitos, métricas, arquivos, APIs, técnicas ou disponibilidade de ferramentas. Transformar suspeitas em hipóteses investigáveis. Não exigir metas numéricas sem baseline ou limite fornecido.
-- Definir o resultado suficiente e critérios de aceitação proporcionais: para um bug, reproduzir ou fundamentar o mecanismo e preservar comportamento correto; para desempenho, avaliar o cenário afetado com evidência comparável quando necessário; para uma feature, definir comportamento esperado e integração sem impor arquitetura. Não ampliar o escopo para atingir perfeição genérica.
+- Definir critérios de aceitação como **resultados desejados, não procedimentos obrigatórios**: para um bug, corrigir o comportamento ou fundamentar o mecanismo conforme o pedido; para desempenho, reduzir o custo alvo sem regressões relevantes; para uma feature, definir comportamento esperado e integração. Preservar requisitos explícitos de reprodução ou medição, mas não deduzir uma bateria de testes desses objetivos. Não ampliar o escopo para atingir perfeição genérica.
 
 ## 2. Perguntar somente quando importar
 
 - Perguntar **antes de gerar** apenas se uma preferência, restrição ou conflito não resolvido puder mudar materialmente o objetivo, o escopo ou um trade-off importante. Fazer a menor quantidade de perguntas específicas; normalmente uma, no máximo três em um turno.
 - Não transferir ao usuário investigações que cabem ao executor: arquivo culpado, causa raiz, método de profiling, API correta, algoritmo ou escolha de estrutura de dados.
-- Se houver pressuposto conservador razoável, usá-lo e entregar diretamente: preservar funções existentes, compatibilidade e qualidade visual quando possível. Não iniciar entrevista por hábito. Se o usuário pedir um prompt provisório sem responder perguntas, fornecer a melhor versão possível e identificar brevemente o pressuposto.
+- Se houver pressuposto conservador razoável, usá-lo e entregar diretamente: preservar funções existentes, compatibilidade e qualidade visual quando possível. Não perguntar sobre modalidade de validação por rotina: respeitar preferências conhecidas ou delegar a escolha proporcional ao executor, dentro da autorização existente. Se o usuário pedir um prompt provisório, fornecer a melhor versão possível e identificar brevemente o pressuposto.
 
 ## 3. Escrever o prompt
 
 Entregar **um único prompt**, não uma sequência artificial de prompts ou fases. Usar somente o necessário para:
 
 1. Definir a missão concreta e o resultado esperado com verbo coerente.
-2. Incluir contexto e restrições **decisivos** disponíveis; reutilizar achados e decisões já conhecidos sem exigir releitura ou redescoberta. Não repetir o que o executor consegue observar no próprio projeto nem copiar instruções de skills recomendadas.
-3. Dar liberdade para investigar, escolher abordagens e implementar **apenas se solicitado**. Evitar listas enciclopédicas de áreas, técnicas obrigatórias, personas artificiais e instruções óbvias sobre ferramentas já conectadas.
-4. Pedir verificação **proporcional ao impacto, risco e incerteza**: aproveitar evidências e baselines ainda válidos; começar por inspeção de código, logs ou documentos quando suficiente. Executar testes, pesquisas e medições que possam mudar uma decisão, resolver incerteza material ou verificar uma mudança relevante. Repetir somente se houver motivo (ruído, regressão, hipótese ou condição alterada). Preservar verificações solicitadas e indispensáveis; não exigir aprovações intermediárias por padrão.
+2. Incluir contexto e restrições **decisivos** disponíveis; reutilizar achados e decisões já conhecidos sem exigir releitura ou redescoberta. Não repetir o que o executor consegue observar no próprio projeto nem copiar instruções de skills recomendadas. Manter explícitas as preferências do usuário que o executor pode não conhecer.
+3. Dar liberdade para investigar, escolher abordagens e implementar **apenas se solicitado**. Em pedidos de implementação, favorecer a alteração fundamentada assim que a evidência for suficiente, sem impor investigação exaustiva ou atrasar o código por falta de testes não essenciais. Evitar listas enciclopédicas de áreas, técnicas obrigatórias, personas artificiais e instruções óbvias sobre ferramentas já conectadas.
+4. Tratar validação conforme **responsabilidade, autorização, impacto, risco e incerteza** (ver seção abaixo). Reutilizar evidências e baselines válidos; priorizar inspeção estática, logs e revisão do diff quando suficientes. Não prescrever cenários, métricas, ferramentas, ambientes, ciclos antes/depois ou repetições antes de conhecer a mudança, salvo requisito explícito ou necessidade material demonstrável. Quando uma skill pertinente já define a estratégia, delegar o método a ela. Não transformar sugestões opcionais em obrigações.
 5. Preservar comportamento, contratos e qualidade relevantes; não bloquear uma reestruturação necessária com a regra cega de 'menor patch'. Diferenciar análise sem edição de implementação autorizada.
 6. Permitir perguntas pertinentes durante a execução. Acesso técnico amplo **não concede** autorização para publicar, excluir dados, alterar recursos fora do pedido ou realizar ações irreversíveis não solicitadas.
-7. Evitar investigação ilimitada. Concluir quando o resultado solicitado e sua validação proporcional estiverem atendidos. Se faltar evidência essencial, identificar a lacuna e a menor verificação pertinente; realizá-la se estiver autorizada e disponível, ou relatar o bloqueio. Não exigir confirmação empírica de hipóteses explicitamente rotuladas nem inventar resultados.
+7. Evitar investigação ilimitada. Concluir quando o trabalho autorizado e as checagens pertinentes estiverem atendidos; a validação delegada pode ficar pendente, com riscos e limitações explícitos. Se evidência essencial faltar, identificar a menor verificação pertinente e respeitar sua autorização; não executar a parte insegura da mudança apenas para economizar. Não inventar confirmações, resultados ou ganhos medidos.
 
-Preferir linguagem natural e concisa. Economizar trabalho redundante, não evidências essenciais. A escolha entre análise estática, execução pontual e testes mais extensos depende da missão e do risco — não impor uma regra universal nem trocar resultados medidos por suposições.
+Preferir linguagem natural e concisa. Economizar trabalho redundante, não evidências essenciais. O prompt deve definir a missão, não roteirizar a execução. Não trocar resultados medidos por suposições.
+
+### Responsabilidade pela validação — aplicar sem copiar a seção inteira
+
+- **Manual:** quando o usuário assumir testes práticos, medições ou avaliações, tornar essa divisão explícita no prompt (por exemplo: "Priorize a análise e a implementação; eu farei os testes práticos."). Permitir análise e checagens estáticas pertinentes, como diff, tipos e lint, sem transformar isso em nova campanha de validação. Não autorizar execução do aplicativo/jogo, simulações, benchmarks, profiling, instrumentação ou cenários práticos delegados ao usuário. Se uma verificação prática for indispensável para avançar com segurança, o executor deve explicar a lacuna e pedir autorização específica ou entregar a parte segura com a pendência.
+- **Híbrida:** se o usuário autorizar testes específicos e assumir os demais, preservar exatamente essa divisão; não ampliar os testes delegados nem pedir autorização novamente para o que já foi permitido.
+- **Autônoma:** se o usuário pedir execução/validação prática pelo agente, manter os testes e medições solicitados, dentro do escopo; deixar o executor escolher verificações proporcionais e evitar repetições sem utilidade decisória.
+- **Não especificada:** não inventar preferência manual, nem transformar um pedido genérico de implementação em autorização ampla para testes caros. Não acrescentar um plano de testes práticos por hábito; delegar o método às instruções do projeto/skills e às autorizações do destinatário. Não perguntar sobre modalidade quando isso não mudar materialmente a missão.
+
+Em qualquer modalidade, não exigir comprovação empírica de ganho quando o usuário só pediu uma implementação fundamentada; se não medido, o ganho é esperado, não comprovado. Se o usuário pediu medição ou reprodução como resultado, preservá-la e identificar corretamente quem a realizará. Entregar riscos e verificações manuais essenciais quando úteis, sem criar listas extensas. Não sacrificar correção, segurança ou integridade para economizar tempo ou cota.
+
+**Exemplo de decisão (não um modelo obrigatório):** um pedido de otimizar tráfego de rede com evidência de pico e validação manual conhecida não exige prescrever destruição isolada/intensa, múltiplos clientes, entrada tardia ou uma matriz de métricas. Preserve o objetivo, o dado observado, as restrições relevantes e a responsabilidade pelos testes. Se a mudança afetar o contrato de sincronização, o executor deve considerar esse risco e indicar a verificação pertinente; não antecipar uma bateria de cenários sem conhecer o diff. O mesmo princípio vale para outras plataformas e tarefas.
 
 ### Controle de execução — somente quando material
 
 Para tarefas complexas, agênticas ou com orçamento limitado, incorporar apenas os controles úteis ao caso; esta seção é um critério de elaboração, **não um bloco obrigatório para copiar**:
 
 - Delimitar o escopo e priorizar lacunas que mudem o resultado. Consultar referências e ferramentas sob demanda, agrupar operações independentes quando seguro e manter retornos focados em evidência acionável. Não impor métodos que o destinatário não suporta.
-- Se várias skills forem necessárias, orientar uma única execução integrada: compartilhar contexto, baseline, evidências e validação, sem repetir procedimentos por skill. Delegar regras especializadas às próprias skills.
+- Se várias skills forem necessárias, orientar uma única execução integrada somente quando isso acrescentar valor: compartilhar contexto, baseline, evidências e validação, sem repetir procedimentos por skill. Delegar regras especializadas às próprias skills; não reproduzir seus fluxos de investigação ou testes no prompt.
 - Se a investigação estagnar ou o custo crescer sem benefício material, mudar a abordagem ou encerrar de forma controlada, preservando trabalho autorizado e registrando achados, alterações, validação e pendências. Não tratar checkpoint como aprovação obrigatória nem interromper uma correção viável por rotina.
 - Respeitar orçamento ou reserva explicitamente informados pelo usuário quando observáveis. Não presumir acesso à cota, inventar limites de tokens/chamadas/tempo, prometer economia ou simular um limite rígido. Se não houver telemetria, não pedir ao executor que consulte uma cota inacessível; recomendar acompanhamento externo quando realmente útil.
 
-Em tarefas simples, omitir esses controles adicionais quando não melhorarem o resultado. Não gerar uma sequência de fases artificiais para economizar tokens.
+Em tarefas simples, omitir esses controles adicionais quando não melhorarem o resultado. Não gerar uma sequência de fases artificiais para economizar tokens. Em tarefas com validação manual, uma frase de divisão de responsabilidade normalmente basta; não acrescentar protocolos de testes nem instruções genéricas de economia.
 
 ## 4. Recomendar configurações pelo **destino**, não pela interface atual
 
@@ -61,7 +72,7 @@ Essas escolhas são recomendações contextuais, não benchmarks, garantias ou r
 ## 5. Recomendar skills opcionais sem ativá-las
 
 - Recomendar **somente skills pertinentes e conhecidas/confirmadas** no contexto; não instalar, invocar ou carregar outras skills para elaborar o prompt. Se nenhuma ajudar, indicar `Nenhuma necessária`. Listar fora do prompt para seleção manual.
-- Para o ecossistema Roblox informado: `$rbx-root-cause` para diagnóstico causal de bug; `$rbx-optimize` para meta de desempenho; `$rbx-audit` para análise sistêmica de arquitetura; `$rbx-review` para revisão de diff, se instalada. Em geral, uma principal é suficiente; combinar somente se houver responsabilidades distintas relevantes ao mesmo objetivo (por exemplo, causa de um defeito e desempenho explicitamente solicitados). Uma combinação não implica executar dois fluxos completos. **A missão, não o tema, determina a escolha.**
+- Para o ecossistema Roblox informado: `$rbx-root-cause` para diagnóstico causal de bug; `$rbx-optimize` para meta de desempenho; `$rbx-audit` para análise sistêmica de arquitetura; `$rbx-review` para revisão de diff, se instalada. Em geral, uma principal é suficiente; combinar somente se houver responsabilidades distintas relevantes ao mesmo objetivo (por exemplo, causa de um defeito e desempenho explicitamente solicitados). Uma combinação não implica executar dois fluxos completos. Com Roblox Engineering Skills v2.1.0 ou posterior, quando conhecida a política correspondente, delegar a ela os detalhes de validação; preservar no prompt a preferência do usuário, sem repetir a política. **A missão, não o tema, determina a escolha.**
 - `$ponytail` pode favorecer a menor mudança **completa**, sem vetar refatoração necessária; `$caveman` pode concisar a **resposta**, sem reduzir análise, evidência ou uso justificado de ferramentas. Ambos são **opcionais**, não garantem economia total de tokens e não devem ser empilhados automaticamente, sobretudo se a skill principal já cobre os mesmos princípios. Não recomendar compressão da análise ou omissão de evidências apenas para reduzir a resposta.
 - Variantes (`$ponytail-audit`, `$caveman-explore` etc.) só quando seu comportamento estiver confirmado e servir à missão. A sintaxe de invocação depende da plataforma: `$` é contextual ao Codex; não colocá-la automaticamente no prompt copiável, salvo pedido explícito.
 
@@ -77,4 +88,4 @@ Essas escolhas são recomendações contextuais, não benchmarks, garantias ou r
 
 **Prompt pronto para copiar** — um único bloco de texto com o prompt final, sem instruções sobre a própria skill, comentários internos ou variações não pedidas.
 
-Se o usuário pedir **somente o prompt**, omitir configuração e skills. Ajustar concisão/detalhamento conforme solicitado. Antes de entregar, verificar mentalmente se cada instrução acrescenta um requisito, uma restrição ou uma decisão útil: eliminar redundância com contexto e skills, preservar critérios essenciais e não adicionar controles por hábito. Não declarar que código, medição ou resultado foram testados quando somente o prompt foi elaborado.
+Se o usuário pedir **somente o prompt**, omitir configuração e skills. Ajustar concisão/detalhamento conforme solicitado. Antes de entregar, verificar mentalmente: cada frase preserva um requisito, uma restrição ou uma decisão útil? Algum método, métrica, cenário, confirmação ou etapa foi promovido a obrigação sem necessidade? A responsabilidade pela validação foi preservada? A implementação está sendo atrasada por verificações não essenciais? Eliminar redundâncias e delegar métodos à skill/executor, mantendo requisitos e riscos materiais. Não declarar que código, medição ou resultado foram testados quando somente o prompt foi elaborado.

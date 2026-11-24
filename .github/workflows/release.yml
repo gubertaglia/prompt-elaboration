@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Release tag (for example v1.3)"
+        description: "Release tag (for example v1.4)"
         required: true
-        default: "v1.3"
+        default: "v1.4"
   push:
     branches: [main]
     paths:
@@ -27,7 +27,7 @@ jobs:
       - name: Assemble installable skill ZIP
         shell: bash
         env:
-          RELEASE_TAG: ${{ github.event.inputs.tag || 'v1.3' }}
+          RELEASE_TAG: ${{ github.event.inputs.tag || 'v1.4' }}
         run: |
           set -euo pipefail
           [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?$ ]] || { echo "Invalid tag"; exit 1; }
@@ -64,7 +64,7 @@ jobs:
             exit 0
           fi
           gh release create "$RELEASE_TAG" \
-            "dist/prompt-elaboration-${RELEASE_TAG}.zip#Skill para instalar no Codex" \
+            "dist/prompt-elaboration-${RELEASE_TAG}.zip#Skill para instalar no ChatGPT ou Codex" \
             --title "Prompt Elaboration $RELEASE_TAG" \
             --notes-file dist/release-notes.md \
             --target "$GITHUB_SHA" \

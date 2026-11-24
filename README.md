@@ -4,7 +4,7 @@
 
 A skill **não executa a tarefa**: ela prepara a solicitação para outro agente, identifica perguntas realmente necessárias e recomenda, quando relevante, o modelo, o nível de raciocínio, o modo Planejamento e outras skills adequadas.
 
-**Versão:** `1.3` · **Idioma:** Português (Brasil)
+**Versão:** `1.4` · **Idioma:** Português (Brasil)
 
 ## O que faz
 
@@ -15,10 +15,30 @@ A skill **não executa a tarefa**: ela prepara a solicitação para outro agente
 - Sugere configurações conforme o **agente de destino**, não conforme a interface que está gerando o prompt.
 - Recomenda outras skills **opcionais**, como Ponytail, Caveman e `rbx-*`, sem invocá-las automaticamente.
 - Prioriza economia de desperdício, não redução da qualidade técnica.
-- Propõe verificações proporcionais ao risco, reaproveitando evidências antes de pedir testes, benchmarks ou chamadas repetitivas desnecessárias.
-
+- Preserva a responsabilidade pela validação: manual, híbrida ou autônoma, conforme a preferência e autorização do usuário.
+- Define critérios de aceitação como resultados, sem antecipar cenários, benchmarks ou procedimentos desnecessários; favorece implementação fundamentada e checagens estáticas pertinentes.
+- Delega métodos às skills especializadas, inclusive Roblox Engineering Skills v2.1.0 quando pertinente, sem tornar a skill dependente do Roblox.
 - Adiciona controle de execução somente quando material: escopo, evidências reutilizáveis, operações focadas, coordenação entre skills e critérios de conclusão.
 - Considera orçamento explicitamente informado sem presumir telemetria ou impor limites arbitrários; não promete redução de cota.
+
+## Por que a v1.4 existe
+
+Durante o desenvolvimento de um sistema voxel, o mantenedor observou uma execução do Codex Plus que durou cerca de 24 minutos e consumiu 95 pontos percentuais da janela de cinco horas. Foram registradas 108 chamadas de ferramentas e aproximadamente 14,7 milhões de tokens acumulados, incluindo cache. Em tarefas posteriores, o mantenedor identificou operações de Play/Stop, medições e verificações como atividades que prefere realizar pessoalmente.
+
+A v1.3 já buscava reduzir trabalho redundante, mas ainda podia incentivar prompts com cenários de teste, métricas e confirmações antecipadas antes de o executor conhecer a alteração. A v1.4 distingue o **resultado pretendido** do **método de validação** e preserva quem é responsável pelos testes. Isso evita transformar verificações opcionais em requisitos e favorece a implementação quando a evidência é suficiente.
+
+As observações não constituem um experimento controlado: não demonstram que testes, modelo ou skills isoladamente causaram o consumo. A skill não monitora a cota, não promete economia e não deve omitir evidências essenciais de segurança, correção ou integridade.
+
+### Responsabilidade pela validação
+
+| Preferência do usuário | Comportamento do prompt |
+| --- | --- |
+| Manual | Deixar testes práticos e medições com o usuário; preservar análise, implementação autorizada e checagens estáticas pertinentes. |
+| Híbrida | Autorizar somente os testes práticos especificados; delegar os demais. |
+| Autônoma | Preservar os testes e medições solicitados; deixar a estratégia proporcional a cargo do executor. |
+| Não especificada | Não inventar preferência nem autorização ampla; delegar métodos ao projeto, às skills e às permissões existentes. |
+
+Essas modalidades são critérios de elaboração, não configurações nativas do Codex. Se a validação prática for indispensável para avançar com segurança, o executor deve explicar a lacuna e respeitar a autorização; ganhos não medidos não são ganhos comprovados.
 
 ## Instalação rápida
 
@@ -27,12 +47,12 @@ Escolha a interface onde pretende utilizar a skill. **Instalar no Codex não a i
 | Plataforma | Método recomendado |
 | --- | --- |
 | **ChatGPT Web** | Abra [Habilidades](https://chatgpt.com/skills) → **Adicionar** → **Carregar do seu computador** → selecione o ZIP da release. A opção depende da sua conta e pode exigir análise do arquivo. |
-| **Codex Desktop** | Use a skill integrada `$skill-installer` com o repositório, `--path .`, `--name prompt-elaboration` e a ref `v1.3`; ou instale manualmente o ZIP. |
+| **Codex Desktop** | Use a skill integrada `$skill-installer` com o repositório, `--path .`, `--name prompt-elaboration` e a ref `v1.4`; ou instale manualmente o ZIP. |
 
 ### Downloads
 
-- **[Release estável v1.3](https://github.com/gubertaglia/prompt-elaboration/releases/tag/v1.3)**
-- **[Baixar skill v1.3 (.zip)](https://github.com/gubertaglia/prompt-elaboration/releases/download/v1.3/prompt-elaboration-v1.3.zip)** — ZIP instalável, contendo somente a pasta `prompt-elaboration/`.
+- **[Release estável v1.4](https://github.com/gubertaglia/prompt-elaboration/releases/tag/v1.4)**
+- **[Baixar skill v1.4 (.zip)](https://github.com/gubertaglia/prompt-elaboration/releases/download/v1.4/prompt-elaboration-v1.4.zip)** — ZIP instalável, contendo somente a pasta `prompt-elaboration/`.
 - [Todas as releases](https://github.com/gubertaglia/prompt-elaboration/releases).
 
 Use o **ZIP anexado à release**, não o botão **Code → Download ZIP** do GitHub, quando a intenção for instalar a skill manualmente.
@@ -43,7 +63,7 @@ No chat do Codex Desktop, selecione `$skill-installer` e envie:
 
 ```text
 Instale a skill do repositório gubertaglia/prompt-elaboration,
-usando --ref v1.3 --path . --name prompt-elaboration.
+usando --ref v1.4 --path . --name prompt-elaboration.
 Instale no diretório de skills reconhecido por este Codex,
 sem modificar as outras skills.
 ```
@@ -68,7 +88,9 @@ Em uma instalação manual típica do Windows, a pasta ficará em `%USERPROFILE%
 
 **Prompt para copiar:**
 
-> Investigue e corrija as quedas de FPS quando muitas explosões acontecem no meu sistema voxel. Identifique os gargalos responsáveis e implemente as otimizações adequadas, preservando a jogabilidade e os efeitos relevantes. Verifique de forma proporcional se o cenário afetado melhorou e se houve regressões importantes.
+> Investigue e corrija as quedas de FPS quando muitas explosões acontecem no meu sistema voxel. Identifique os gargalos responsáveis e implemente as otimizações adequadas, preservando a jogabilidade e os efeitos relevantes.
+
+**Se o usuário informou que fará os testes:** acrescentar ao prompt apenas a restrição relevante, por exemplo: "Priorize a análise e a implementação no código. Eu realizarei os testes práticos e as medições no Roblox Studio." Não prescrever ciclos de Play/Stop ou uma matriz de testes por padrão.
 
 ## Arquivos
 
@@ -95,6 +117,6 @@ Este repositório não inclui licença de código aberta definida. A escolha de 
 
 ## Manutenção das releases
 
-O workflow [Publish skill release](.github/workflows/release.yml) monta e valida o ZIP instalável. Para uma versão futura, atualize `SKILL.md`, `CHANGELOG.md` e o número de versão exibido neste README; depois execute **Actions → Publish skill release → Run workflow** e informe a tag da nova versão (por exemplo, `v1.3`).
+O workflow [Publish skill release](.github/workflows/release.yml) monta e valida o ZIP instalável. Para uma versão futura, atualize `SKILL.md`, `CHANGELOG.md` e o número de versão exibido neste README; depois execute **Actions → Publish skill release → Run workflow** e informe a tag da nova versão (por exemplo, `v1.4`).
 
 **GitHub Packages não é necessário**: a distribuição é feita por arquivos ZIP anexados às GitHub Releases.
