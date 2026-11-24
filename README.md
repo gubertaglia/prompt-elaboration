@@ -4,7 +4,7 @@
 
 A skill **não executa a tarefa**: ela prepara a solicitação para outro agente, identifica perguntas realmente necessárias e recomenda, quando relevante, o modelo, o nível de raciocínio, o modo Planejamento e outras skills adequadas.
 
-**Versão:** `1.2` · **Idioma:** Português (Brasil)
+**Versão:** `1.3` · **Idioma:** Português (Brasil)
 
 ## O que faz
 
@@ -17,6 +17,9 @@ A skill **não executa a tarefa**: ela prepara a solicitação para outro agente
 - Prioriza economia de desperdício, não redução da qualidade técnica.
 - Propõe verificações proporcionais ao risco, reaproveitando evidências antes de pedir testes, benchmarks ou chamadas repetitivas desnecessárias.
 
+- Adiciona controle de execução somente quando material: escopo, evidências reutilizáveis, operações focadas, coordenação entre skills e critérios de conclusão.
+- Considera orçamento explicitamente informado sem presumir telemetria ou impor limites arbitrários; não promete redução de cota.
+
 ## Instalação rápida
 
 Escolha a interface onde pretende utilizar a skill. **Instalar no Codex não a instala automaticamente no ChatGPT Web, nem vice-versa.** Consulte o [guia completo](INSTALL.md).
@@ -24,12 +27,12 @@ Escolha a interface onde pretende utilizar a skill. **Instalar no Codex não a i
 | Plataforma | Método recomendado |
 | --- | --- |
 | **ChatGPT Web** | Abra [Habilidades](https://chatgpt.com/skills) → **Adicionar** → **Carregar do seu computador** → selecione o ZIP da release. A opção depende da sua conta e pode exigir análise do arquivo. |
-| **Codex Desktop** | Use a skill integrada `$skill-installer` com o repositório, `--path .`, `--name prompt-elaboration` e a ref `v1.2`; ou instale manualmente o ZIP. |
+| **Codex Desktop** | Use a skill integrada `$skill-installer` com o repositório, `--path .`, `--name prompt-elaboration` e a ref `v1.3`; ou instale manualmente o ZIP. |
 
 ### Downloads
 
-- **[Release estável v1.2](https://github.com/gubertaglia/prompt-elaboration/releases/tag/v1.2)**
-- **[Baixar skill v1.2 (.zip)](https://github.com/gubertaglia/prompt-elaboration/releases/download/v1.2/prompt-elaboration-v1.2.zip)** — ZIP instalável, contendo somente a pasta `prompt-elaboration/`.
+- **[Release estável v1.3](https://github.com/gubertaglia/prompt-elaboration/releases/tag/v1.3)**
+- **[Baixar skill v1.3 (.zip)](https://github.com/gubertaglia/prompt-elaboration/releases/download/v1.3/prompt-elaboration-v1.3.zip)** — ZIP instalável, contendo somente a pasta `prompt-elaboration/`.
 - [Todas as releases](https://github.com/gubertaglia/prompt-elaboration/releases).
 
 Use o **ZIP anexado à release**, não o botão **Code → Download ZIP** do GitHub, quando a intenção for instalar a skill manualmente.
@@ -40,7 +43,7 @@ No chat do Codex Desktop, selecione `$skill-installer` e envie:
 
 ```text
 Instale a skill do repositório gubertaglia/prompt-elaboration,
-usando --ref v1.2 --path . --name prompt-elaboration.
+usando --ref v1.3 --path . --name prompt-elaboration.
 Instale no diretório de skills reconhecido por este Codex,
 sem modificar as outras skills.
 ```
@@ -92,6 +95,6 @@ Este repositório não inclui licença de código aberta definida. A escolha de 
 
 ## Manutenção das releases
 
-O workflow [Publish skill release](.github/workflows/release.yml) monta e valida o ZIP instalável. Para uma versão futura, atualize `SKILL.md`, `CHANGELOG.md` e o número de versão exibido neste README; depois execute **Actions → Publish skill release → Run workflow** e informe a tag da nova versão (por exemplo, `v1.2`).
+O workflow [Publish skill release](.github/workflows/release.yml) monta e valida o ZIP instalável. Para uma versão futura, atualize `SKILL.md`, `CHANGELOG.md` e o número de versão exibido neste README; depois execute **Actions → Publish skill release → Run workflow** e informe a tag da nova versão (por exemplo, `v1.3`).
 
 **GitHub Packages não é necessário**: a distribuição é feita por arquivos ZIP anexados às GitHub Releases.

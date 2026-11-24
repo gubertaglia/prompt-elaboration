@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.3 — 2026-11-23
+
+- Definidos critérios de aceitação proporcionais e reutilização de achados e baselines válidos.
+- Adicionado controle de execução seletivo para tarefas complexas: consultas sob demanda, agrupamento seguro de operações e retornos focados em evidência acionável.
+- Melhorada a coordenação entre skills complementares, evitando fluxos de trabalho, investigações e validações duplicados.
+- Reforçados os critérios de encerramento e a reavaliação de investigações estagnadas, sem aprovações intermediárias obrigatórias.
+- Tratamento de orçamento informado pelo usuário quando observável, sem presumir acesso à cota ou prometer economia.
+- Recomendações de modelo, raciocínio e skills ajustadas ao custo e à complexidade da missão, sem reduzir a qualidade necessária.
+- Preservados o caráter universal, a geração de um único prompt, a invocação explícita e a compatibilidade estrutural CHAT/CODEX. Alinhamento com Roblox Engineering Skills v2.0.0 quando pertinente.
+- Validação estrutural do pacote; testes comportamentais e economia quantitativa de cota ainda não comprovados.
+
 ## v1.2 — 2026-11-23
 
 - Aperfeiçoada a elaboração de prompts com verificações proporcionais ao impacto, risco e incerteza.
