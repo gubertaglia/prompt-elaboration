@@ -1,7 +1,7 @@
 interface:
   display_name: "Prompt Elaboration"
-  short_description: "Melhora objetivos e gera prompts claros com perguntas e configurações úteis"
-  default_prompt: "Transforme minha missão em um prompt pronto para copiar. Faça perguntas só se alterarem materialmente o objetivo; recomende configurações e skills pertinentes sem executar a tarefa; preserve qualidade, evite procedimentos redundantes e respeite quem realiza a validação prática."
+  short_description: "Elabora prompts precisos, contextuais e proporcionais para outros agentes"
+  default_prompt: "Transforme minha missão em um prompt pronto para copiar. Faça perguntas só se alterarem materialmente o objetivo; recomende configurações e skills pertinentes sem executar a tarefa; preserve contexto, evidências e preferências; evite procedimentos e relatórios desnecessários e respeite quem realiza a validação prática."
 policy:
   products:
     - CHAT

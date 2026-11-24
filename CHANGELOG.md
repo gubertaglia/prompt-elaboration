@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.5 — 2026-11-24
+
+- **Motivação:** a partir das adaptações manuais de prompts e das observações de consumo e duração do Codex registradas na v1.4, identificamos a necessidade de preservar investigação técnica e contexto útil sem impor novos testes, coleta de métricas ou relatórios extensos. Não há evidência controlada que atribua o consumo a uma causa isolada ou comprove economia.
+- **Context Over Procedures / Causal Context:** preservar condições, dependências, sequência de acontecimentos e casos de referência, sem transformá-los em procedimentos obrigatórios.
+- **Evidence Fidelity / Evidence Separation / Hypothesis Preservation:** manter origem, unidade, circunstâncias e limitações; separar eventos e ambientes, leituras pontuais, médias e picos confirmados; manter suspeitas como hipóteses.
+- **Investigation Boundaries / Operational Boundaries:** distinguir investigação técnica de experimentação prática; reconhecer instruções naturais de delegação de testes como limites operacionais. Preservar validação manual, híbrida ou autônoma conforme preferência e autorização.
+- **Outcome Over Procedure / Execution Freedom:** critérios de aceitação orientados ao resultado, estratégia técnica delegada e profundidade proporcional à incerteza, às dependências e ao risco.
+- **Preference Continuity / User Language Preservation:** preservar preferências pertinentes, respeitar seu escopo e manter comunicação natural sem formalização desnecessária.
+- **Output Discipline:** evitar relatórios, métricas, históricos e confirmações não solicitados que possam induzir coleta adicional. Preservar evidências essenciais, riscos materiais e detalhamento solicitado.
+- **Skill Awareness / Instruction Economy:** recomendar combinações por responsabilidades complementares, considerar sobreposição e evitar duplicação de regras. Ponytail e Caveman continuam opcionais; Roblox Engineering Skills v2.1.0 ou posterior é considerado quando disponível, sem dependência obrigatória.
+- Regras consolidadas nas seções existentes; preservados caráter universal, invocação explícita, um único prompt, metadados CHAT/CODEX e pacote instalável com dois arquivos. O acesso ampliado não é presumido sem preferência conhecida.
+- README, guias de instalação, instruções alternativas para Projetos e workflow atualizados. Validação estrutural do ZIP; testes comportamentais no Codex e economia de cota ainda não comprovados.
+
 ## v1.4 — 2026-11-24
 
 - **Motivação:** uma execução relatada no Codex Plus consumiu 95 pontos percentuais da janela de cinco horas em cerca de 24 minutos, com 108 chamadas e 14,7 milhões de tokens acumulados incluindo cache. O mantenedor observou em tarefas posteriores que testes práticos, medições e confirmações podiam ocupar parte relevante do trabalho e preferiu assumir essas atividades. As observações não isolam causalidade nem comprovam economia.

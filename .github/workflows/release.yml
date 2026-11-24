@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Release tag (for example v1.4)"
+        description: "Release tag (for example v1.5)"
         required: true
-        default: "v1.4"
+        default: "v1.5"
   push:
     branches: [main]
     paths:
@@ -27,7 +27,7 @@ jobs:
       - name: Assemble installable skill ZIP
         shell: bash
         env:
-          RELEASE_TAG: ${{ github.event.inputs.tag || 'v1.4' }}
+          RELEASE_TAG: ${{ github.event.inputs.tag || 'v1.5' }}
         run: |
           set -euo pipefail
           [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?$ ]] || { echo "Invalid tag"; exit 1; }
